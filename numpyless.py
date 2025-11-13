@@ -206,8 +206,20 @@ def transpose(A: Matriz) -> Matriz:
 
     Pista: Usa zip(*A) o listas por comprensión
     """
+
+    filas, columnas = shape(A)
+    new_matriz:Matriz = zeros((columnas,filas))
+
+    for fila in range(filas):
+        for columna in range(columnas):
+            new_matriz[columna][fila] = A[fila][columna]
+
+    return new_matriz
+
     raise NotImplementedError("Función no implementada.")
 
+# Pruebas
+assert transpose([[1, 2, 3], [4, 5, 6]]) == [[1, 4], [2, 5], [3, 6]]
 
 # -------------------------------------------------------------------
 # Sección 3: Operaciones con Vectores (⭐⭐ Intermedio)
