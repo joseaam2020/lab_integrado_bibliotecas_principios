@@ -46,7 +46,26 @@ def zeros(shape: tuple[int, int]) -> Matriz:
 
     Pista: Usa listas por comprensión anidadas
     """
+
+    # Validacion de entradas
+    if(shape[0] < 0 or shape[1] < 0):
+        raise ValueError("Las dimensiones de la matriz deben ser enteros positivos")
+
+    # Creando matriz de 0
+    new_matriz:Matriz = []
+    for fila in range(shape[0]):
+        new_fila:list = [] 
+        for columna in range(shape[1]):
+            new_fila.append(0.0)
+        new_matriz.append(new_fila)
+
+    return new_matriz
+
     raise NotImplementedError("Función no implementada.")
+
+# Pruebas
+assert zeros((2,3)) == [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+assert zeros((4,4)) == [[0.0, 0.0, 0.0, 0.0],[0.0, 0.0, 0.0, 0.0],[0.0, 0.0, 0.0, 0.0],[0.0, 0.0, 0.0, 0.0]]
 
 
 def ones(shape: tuple[int, int]) -> Matriz:
@@ -66,8 +85,26 @@ def ones(shape: tuple[int, int]) -> Matriz:
 
     Pista: Similar a zeros() pero con 1.0
     """
+
+    # Validacion de entradas
+    if(shape[0] < 0 or shape[1] < 0):
+        raise ValueError("Las dimensiones de la matriz deben ser enteros positivos")
+
+    # Creando matriz de 0
+    new_matriz:Matriz = []
+    for fila in range(shape[0]):
+        new_fila:list = [] 
+        for columna in range(shape[1]):
+            new_fila.append(1.0)
+        new_matriz.append(new_fila)
+
+    return new_matriz
+
     raise NotImplementedError("Función no implementada.")
 
+# Pruebas
+assert ones((2,3)) == [[1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]
+assert ones((4,4)) == [[1.0, 1.0, 1.0, 1.0],[1.0, 1.0, 1.0, 1.0],[1.0, 1.0, 1.0, 1.0],[1.0, 1.0, 1.0, 1.0]]
 
 def identity(n: int) -> Matriz:
     """Crea una matriz identidad cuadrada.
