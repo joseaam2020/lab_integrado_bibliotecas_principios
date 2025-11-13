@@ -48,8 +48,8 @@ def zeros(shape: tuple[int, int]) -> Matriz:
     """
 
     # Validacion de entradas
-    if(shape[0] < 0 or shape[1] < 0):
-        raise ValueError("Las dimensiones de la matriz deben ser enteros positivos")
+    if(shape[0] <= 0 or shape[1] <= 0):
+        raise ValueError("Las dimensiones de la matriz deben ser mayor que 0")
 
     # Creando matriz de 0
     new_matriz:Matriz = []
@@ -87,8 +87,8 @@ def ones(shape: tuple[int, int]) -> Matriz:
     """
 
     # Validacion de entradas
-    if(shape[0] < 0 or shape[1] < 0):
-        raise ValueError("Las dimensiones de la matriz deben ser enteros positivos")
+    if(shape[0] <= 0 or shape[1] <= 0):
+        raise ValueError("Las dimensiones de la matriz deben ser mayor que 0")
 
     # Creando matriz de 0
     new_matriz:Matriz = []
@@ -125,8 +125,27 @@ def identity(n: int) -> Matriz:
 
     Pista: La diagonal tiene 1.0 cuando fila == columna
     """
+    if n <= 0:
+        raise ValueError("n debe ser un numero positivo mayor a 0")
+
+    matriz:Matriz = []
+    for fila in range(n):
+        new_fila:list = []
+        for columna in range(n):
+            if fila == columna:
+                new_fila.append(1.0)
+            else:
+                new_fila.append(0.0)
+        matriz.append(new_fila)
+
+    return matriz
+
     raise NotImplementedError("Función no implementada.")
 
+# Pruebas
+assert identity(3) == [[1.0, 0.0, 0.0],
+                       [0.0, 1.0, 0.0],
+                       [0.0, 0.0, 1.0]]
 
 # -------------------------------------------------------------------
 # Sección 2: Información de Arrays (⭐ Básico)
@@ -158,7 +177,7 @@ def shape(A: Matriz) -> tuple[int, int]:
     # Se verifica matriz
     for fila in range(1,filas):
         if columnas != len(A[fila]):
-            raise ValueError("La matriz no tiene todas las file con la misma cantidad de columnas")
+            raise ValueError("La matriz no tiene todas las filas con la misma cantidad de columnas")
 
     return (filas,columnas)
     
