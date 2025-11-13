@@ -249,7 +249,22 @@ def dot(v: Vector, w: Vector) -> float:
 
     Pista: Usa sum() y zip()
     """
+    # Validar entradas
+    if(len(v) != len(w)):
+        raise ValueError("Los vectores deben ser del mismo tamanio")
+    if(not len(v) or not len(w)):
+        raise ValueError("Uno de los vectores es nulo")
+
+    result:float = 0
+    for indice in range(len(w)):
+        result += v[indice] * w[indice]
+
+    return result
+
     raise NotImplementedError("Función no implementada.")
+
+# Pruebas 
+assert dot([1, 2, 3], [4, 5, 6]) == 32.0
 
 
 def add(v: Vector, w: Vector) -> Vector:
