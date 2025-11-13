@@ -150,8 +150,23 @@ def shape(A: Matriz) -> tuple[int, int]:
 
     Pista: len(A) da filas, len(A[0]) da columnas
     """
+
+    # Se obtienen valores
+    filas:int = len(A)
+    columnas:int = len(A[0])
+
+    # Se verifica matriz
+    for fila in range(1,filas):
+        if columnas != len(A[fila]):
+            raise ValueError("La matriz no tiene todas las file con la misma cantidad de columnas")
+
+    return (filas,columnas)
+    
     raise NotImplementedError("Función no implementada.")
 
+# Pruebas 
+assert shape([[1, 2, 3], [4, 5, 6]]) == (2,3)
+assert shape(ones((4,5))) == (4,5)
 
 def transpose(A: Matriz) -> Matriz:
     """Devuelve la transpuesta de una matriz A.
