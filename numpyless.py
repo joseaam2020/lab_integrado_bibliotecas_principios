@@ -288,8 +288,22 @@ def add(v: Vector, w: Vector) -> Vector:
 
     Pista: Usa listas por comprensión con zip()
     """
+    # Validar entradas
+    if(len(v) != len(w)):
+        raise ValueError("Los vectores deben ser del mismo tamanio")
+    if(not len(v) or not len(w)):
+        raise ValueError("Uno de los vectores es nulo")
+
+    result:Vector = [0 for i in range(len(w))]
+    for indice in range(len(w)):
+        result[indice] = v[indice] + w[indice]
+
+    return result
+
     raise NotImplementedError("Función no implementada.")
 
+# Pruebas 
+assert add([1, 2], [3, 4]) == [4.0, 6.0]
 
 def multiply(c: float, v: Vector) -> Vector:
     """Multiplica cada elemento de un vector por un escalar.
