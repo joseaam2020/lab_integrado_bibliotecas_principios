@@ -414,7 +414,6 @@ def add_matrices(A: Matriz, B: Matriz) -> Matriz:
 assert add_matrices([[1, 2], [3, 4]], [[5, 6], [7, 8]]) == [[6.0, 8.0], [10.0, 12.0]]
 
 
-
 def multiply_matrix(c: float, A: Matriz) -> Matriz:
     """Multiplica cada elemento de una matriz por un escalar.
 
@@ -433,7 +432,20 @@ def multiply_matrix(c: float, A: Matriz) -> Matriz:
 
     Pista: Similar a multiply() pero para cada fila
     """
+    A_shape:tuple = shape(A)
+    result:Matriz = zeros(A_shape)
+    if A:
+        for fila in range(A_shape[0]):
+            for columna in range(A_shape[1]):
+                result[fila][columna] = c * A[fila][columna]
+        return result
+    else:
+        raise ValueError(f"No se puede multiplicar {c} por matriz nula")
+
     raise NotImplementedError("Función no implementada.")
+
+# Pruebas
+assert multiply_matrix(2, [[1, 2], [3, 4]]) == [[2.0, 4.0], [6.0, 8.0]]
 
 
 def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
@@ -454,8 +466,7 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     Raises:
         ValueError: Si las dimensiones no son compatibles.
 
-    Ejemplos:
-        >>> matmul([[1, 2]], [3, 4])
+    Ejemplos: >>> matmul([[1, 2]], [3, 4])
         [11.0]  # = [1*3 + 2*4]
 
         >>> matmul([[1, 2], [3, 4]], [[5, 6], [7, 8]])
@@ -464,8 +475,39 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     Pista: Para matrices, cada elemento resultado[i][j] es el
            producto punto de la fila i de A con la columna j de B
     """
+
+    # Validar que A es una matriz valida 
+    A_filas, A_columnas = shape(A)
+
+    # Convertir B a matriz si no lo es
+    new_B:Matriz = []
+    for elemento in B:
+        if(isinstance(elemento,list)):
+            new_B.append(elemento)
+        elif(isinstance(elemento,float)):
+            new_B.append([elemento])
+
+    # Valiedar dimnesiones compatibles
+    B_filas,B_columnas = shape(new_B)
+
+    if(A_columnas == B_filas):
+        result = zeros((A_filas,B_columnas)) 
+         # Multiplicación
+        for i in range(A_filas):
+            for j in range(B_columnas):
+                for k in range(A_columnas):
+                    result[i][j] += A[i][k] * new_B[k][j]
+
+        if(len(result) == 1):
+            return result[0]
+        else:
+            return result
+    else:
+        raise ValueError("Dimensiones no compitables")
+
     raise NotImplementedError("Función no implementada.")
 
+assert matmul([[1,2],[3,4]],[[5,6],[7,8]]) == [[19.0, 22.0], [43.0, 50.0]]
 
 # -------------------------------------------------------------------
 # Sección 5: Álgebra Lineal (⭐⭐⭐ Avanzado - Opcional/Extra)
