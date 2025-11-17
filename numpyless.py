@@ -395,7 +395,24 @@ def add_matrices(A: Matriz, B: Matriz) -> Matriz:
 
     Pista: Suma elemento a elemento, fila por fila
     """
+    filas_a, columnas_a = shape(A)
+    filas_b, columnas_b = shape(B)
+
+    result:Matriz
+    if(filas_a == filas_b and columnas_a == columnas_b):
+        result = zeros((filas_a,columnas_a))
+        for fila in range(filas_a):
+            for columna in range(columnas_a):
+                result[fila][columna] = A[fila][columna] + B[fila][columna]
+        return result
+    else:
+        raise ValueError("Las matrices no tienen la misma forma")
+
     raise NotImplementedError("Función no implementada.")
+
+# Pruebas
+assert add_matrices([[1, 2], [3, 4]], [[5, 6], [7, 8]]) == [[6.0, 8.0], [10.0, 12.0]]
+
 
 
 def multiply_matrix(c: float, A: Matriz) -> Matriz:
