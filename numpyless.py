@@ -323,7 +323,18 @@ def multiply(c: float, v: Vector) -> Vector:
 
     Pista: Multiplica c por cada elemento
     """
+    result:Vector = []
+    if v:
+        for indice in range(len(v)):
+            result.append(2.5*v[indice])
+        return result
+    else:
+        raise ValueError("No se puede realizar multiplicacion con vector nulo")
+
     raise NotImplementedError("Función no implementada.")
+
+# Pruebas
+assert multiply(2.5, [1, 2, 3])==[2.5, 5.0, 7.5]
 
 
 def norm(v: Vector) -> float:
@@ -345,8 +356,18 @@ def norm(v: Vector) -> float:
 
     Pista: Usa dot(v, v) y luego sqrt() del módulo math
     """
+    result:float = 0
+    if v:
+        for element in v:
+            result += element**2
+        result = result ** (1/2)
+        return result
+    else:
+        raise ValueError("No hay norma de vector nulo")
     raise NotImplementedError("Función no implementada.")
 
+# Pruebas
+assert norm([3, 4]) == 5.0  
 
 # -------------------------------------------------------------------
 # Sección 4: Operaciones con Matrices (⭐⭐ Intermedio)
