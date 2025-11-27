@@ -548,4 +548,38 @@ def det(A: Matriz) -> float:
     - Caso 2×2: usa la fórmula directa
     - Caso 3×3+: expansión por primera fila (recursivo)
     """
+    filas,columnas = shape(A)
+
+    # Si matriz no es cuadrada error
+    if(filas != columnas):
+        raise ValueError("Para calcular el determinante la maitrz debe ser cuadrada")
+
+    # Si matriz es 2x2
+    if(filas == 2):
+        return A[0][0] * A[1][1] - A[0][1] * A[1][0]
+
+    # Si la matriz es mas grande que 2x2
+    result = 0
+    for i in range(len(A[0])):
+        sub_matriz = zeros((filas-1,columnas-1))
+        a = 0  # índice fila submatriz
+        b = 0  # índice columna submatriz
+        for u in range(filas):
+            for v in range(columnas):
+                if u != i and v != i:
+                    sub_matriz[a][b] = A[u][v]
+                    b += 1
+                    if b == columnas - 1:
+                        b = 0
+                        a += 1
+
+        result += A[0][i] * det(sub_matriz)
+
+    return result
+
     raise NotImplementedError("Función no implementada.")
+
+# Pruebas
+assert det([[4, 3], [2, 1]]) == -2
+assert det([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+
