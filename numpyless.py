@@ -326,7 +326,7 @@ def multiply(c: float, v: Vector) -> Vector:
     result:Vector = []
     if v:
         for indice in range(len(v)):
-            result.append(2.5*v[indice])
+            result.append(c*v[indice])
         return result
     else:
         raise ValueError("No se puede realizar multiplicacion con vector nulo")
@@ -335,6 +335,7 @@ def multiply(c: float, v: Vector) -> Vector:
 
 # Pruebas
 assert multiply(2.5, [1, 2, 3])==[2.5, 5.0, 7.5]
+assert multiply(0, [1, 2, 3])==[0,0,0]
 
 
 def norm(v: Vector) -> float:
@@ -498,8 +499,11 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
                 for k in range(A_columnas):
                     result[i][j] += A[i][k] * new_B[k][j]
 
-        if(len(result) == 1):
-            return result[0]
+        if(len(result[0]) == 1):
+            vector = []
+            for element in result:
+                vector.append(element[0])
+            return vector
         else:
             return result
     else:
@@ -508,6 +512,9 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     raise NotImplementedError("Función no implementada.")
 
 assert matmul([[1,2],[3,4]],[[5,6],[7,8]]) == [[19.0, 22.0], [43.0, 50.0]]
+A = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+v = [1.0, 2.0, 3.0]
+assert matmul(A,v) == [14.0,32.0]
 
 # -------------------------------------------------------------------
 # Sección 5: Álgebra Lineal (⭐⭐⭐ Avanzado - Opcional/Extra)
@@ -560,20 +567,21 @@ def det(A: Matriz) -> float:
 
     # Si la matriz es mas grande que 2x2
     result = 0
-    for i in range(len(A[0])):
+    for i in range(columnas):
         sub_matriz = zeros((filas-1,columnas-1))
         a = 0  # índice fila submatriz
         b = 0  # índice columna submatriz
-        for u in range(filas):
+        for u in range(1, filas):
             for v in range(columnas):
-                if u != i and v != i:
+                if v != i:
                     sub_matriz[a][b] = A[u][v]
                     b += 1
                     if b == columnas - 1:
                         b = 0
                         a += 1
 
-        result += A[0][i] * det(sub_matriz)
+        signo = (-1) ** i
+        result += signo * A[0][i] * det(sub_matriz)
 
     return result
 
